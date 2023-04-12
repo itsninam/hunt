@@ -1,15 +1,33 @@
-const Card = ({ job }) => {
-  const { image, companyName, jobTitle } = job;
+import { useState } from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+
+const Card = ({ job, removeJob }) => {
+  const { id, image, companyName, jobTitle } = job;
+  const [isShown, setIsShown] = useState(false);
 
   return (
-    <div className="card-container">
+    <div
+      className="card-container"
+      onMouseEnter={() => setIsShown(true)}
+      onMouseLeave={() => setIsShown(false)}
+    >
       <img className="company-logo" src={image} alt="job logo" />
       <div className="card-info">
         <p className="company-name">{companyName}</p>
         <p className="job-title">{jobTitle}</p>
-        <div className="created-at">
-          <p>1sec</p>
-        </div>
+      </div>
+      <div className="right-card-items">
+        {isShown && (
+          <FontAwesomeIcon
+            icon={faTrashCan}
+            onClick={() => removeJob(id)}
+            className="icon"
+          />
+        )}
+
+        <p className="created-at">1sec</p>
       </div>
     </div>
   );

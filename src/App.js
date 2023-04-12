@@ -23,6 +23,12 @@ const App = () => {
     });
   }, []);
 
+  const removeJob = (id) => {
+    const filteredJobs = jobs.filter((job) => job.id !== id);
+    setJobs(filteredJobs);
+    localStorage.setItem("jobs", JSON.stringify(filteredJobs));
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -34,7 +40,7 @@ const App = () => {
         <Form setShowForm={setShowForm} jobs={jobs} setJobs={setJobs} />
       )}
       {jobs.map((job) => {
-        return <Card job={job} key={job.id} />;
+        return <Card job={job} key={job.id} removeJob={removeJob} />;
       })}
     </div>
   );
