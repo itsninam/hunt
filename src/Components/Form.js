@@ -1,73 +1,90 @@
 import { useState } from "react";
+import logoPlaceholder from "../assets/images/logo.png";
+import axios from "axios";
 
 const Form = ({ setShowForm, jobs, setJobs }) => {
   const [inputCompany, setInputCompany] = useState("");
   const [inputJob, setInputJob] = useState("");
-  const [logo, setLogo] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
+  const createJob = (img) => {
+    // Create new job obj with user input
+    const newJob = {
+      id: new Date().getTime().toString(36),
+      //if logo is undefined, display default logo placeholder img
+      image: img ? img : logoPlaceholder,
+      companyName: inputCompany,
+      jobTitle: inputJob,
+    };
+    // Update jobs
+    setJobs([...jobs, newJob]);
+    localStorage.setItem("jobs", JSON.stringify([...jobs, newJob]));
+  };
+
+  //logo api call
   const fetchLogo = () => {
-    const options = {
+    axios({
+      url: `https://api.brandfetch.io/v2/search/${inputCompany}`,
       method: "GET",
       headers: {
         accept: "application/json",
-        Referer: "https://example.com/searchIntegrationPage",
       },
-    };
+    })
+      .then((response) => {
+        //optional chaining if user's search does not exist
+        const logo = response.data[0]?.icon;
 
-    fetch(`https://api.brandfetch.io/v2/search/${inputCompany}`, options)
-      .then((response) => response.json())
-      .then((response) => console.log(response[0].icon))
-      .catch((err) => console.error(err));
+        createJob(logo);
+
+        // Hide form
+        setShowForm(false);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        //set error message
+        setErrorMessage("Something went wrong, please try again later");
+
+        setShowForm(true);
+      });
   };
 
+  //form submit
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (inputCompany && inputJob) {
-      //create new job obj with user input
-      const newJob = {
-        id: new Date().getTime().toString(36),
-        image: logo,
-        companyName: inputCompany,
-        jobTitle: inputJob,
-      };
-
-      //update jobs
-      setJobs([...jobs, newJob]);
-      localStorage.setItem("jobs", JSON.stringify([...jobs, newJob]));
-
-      //hide form on submit
-      setShowForm(false);
-
-      //make api call
+      // Make api call
       fetchLogo();
-      console.log(logo);
     } else {
-      alert("please enter all fields");
+      alert("Please enter all fields");
     }
   };
-  return (
-    <form onSubmit={handleSubmit}>
-      <button type="button" onClick={() => setShowForm(false)}>
-        Close
-      </button>
-      <label htmlFor="company">Company</label>
-      <input
-        type="text"
-        id="company"
-        value={inputCompany}
-        onChange={(event) => setInputCompany(event.target.value)}
-      />
 
-      <label htmlFor="job-title">Job Title</label>
-      <input
-        type="text"
-        id="job-title"
-        value={inputJob}
-        onChange={(event) => setInputJob(event.target.value)}
-      />
-      <button type="submit">Submit</button>
-    </form>
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <button type="button" onClick={() => setShowForm(false)}>
+          Close
+        </button>
+        <label htmlFor="company">Company</label>
+        <input
+          type="text"
+          id="company"
+          value={inputCompany}
+          onChange={(event) => setInputCompany(event.target.value)}
+        />
+
+        <label htmlFor="job-title">Job Title</label>
+        <input
+          type="text"
+          id="job-title"
+          value={inputJob}
+          onChange={(event) => setInputJob(event.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <p>{errorMessage}</p>
+    </>
   );
 };
 
