@@ -1,0 +1,9 @@
+.dashboard-container {
+  display: flex;
+
+  .column {
+    width: 400px;
+    border-right: 1px solid grey;
+    height: 500px;
+  }
+}

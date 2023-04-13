@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.scss";
-import Card from "./Components/Card";
+import DashBoard from "./Components/Dashboard";
 import Form from "./Components/Form";
 import Loading from "./Components/Loading";
 
@@ -8,6 +8,7 @@ const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
     setLoading(false);
@@ -18,15 +19,42 @@ const App = () => {
       if (jobs) {
         return (jobs = JSON.parse(localStorage.getItem("jobs")));
       } else {
-        return [];
+        return {
+          wishlist: [],
+          applied: [],
+          interview: [],
+        };
       }
     });
   }, []);
 
   const removeJob = (id) => {
-    const filteredJobs = jobs.filter((job) => job.id !== id);
-    setJobs(filteredJobs);
-    localStorage.setItem("jobs", JSON.stringify(filteredJobs));
+    console.log(id);
+    if (category === "wishlist") {
+      const filteredJobs = jobs.wishlist.filter((job) => job.id !== id);
+
+      setJobs({ ...jobs, wishlist: [...filteredJobs] });
+      localStorage.setItem(
+        "jobs",
+        JSON.stringify({ ...jobs, wishlist: [...filteredJobs] })
+      );
+    } else if (category === "applied") {
+      const filteredJobs = jobs.applied.filter((job) => job.id !== id);
+
+      setJobs({ ...jobs, applied: [...filteredJobs] });
+      localStorage.setItem(
+        "jobs",
+        JSON.stringify({ ...jobs, applied: [...filteredJobs] })
+      );
+    } else if (category === "interview") {
+      const filteredJobs = jobs.interview.filter((job) => job.id !== id);
+
+      setJobs({ ...jobs, interview: [...filteredJobs] });
+      localStorage.setItem(
+        "jobs",
+        JSON.stringify({ ...jobs, interview: [...filteredJobs] })
+      );
+    }
   };
 
   if (loading) {
@@ -35,13 +63,21 @@ const App = () => {
 
   return (
     <div className="App">
-      <button onClick={() => setShowForm(true)}>Add job</button>
+      <DashBoard
+        setShowForm={setShowForm}
+        jobs={jobs}
+        removeJob={removeJob}
+        setCategory={setCategory}
+      />
+
       {showForm && (
-        <Form setShowForm={setShowForm} jobs={jobs} setJobs={setJobs} />
+        <Form
+          setShowForm={setShowForm}
+          jobs={jobs}
+          setJobs={setJobs}
+          category={category}
+        />
       )}
-      {jobs.map((job) => {
-        return <Card job={job} key={job.id} removeJob={removeJob} />;
-      })}
     </div>
   );
 };

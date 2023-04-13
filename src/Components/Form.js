@@ -2,7 +2,7 @@ import { useState } from "react";
 import logoPlaceholder from "../assets/images/logo.png";
 import axios from "axios";
 
-const Form = ({ setShowForm, jobs, setJobs }) => {
+const Form = ({ setShowForm, jobs, setJobs, category }) => {
   const [inputCompany, setInputCompany] = useState("");
   const [inputJob, setInputJob] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -16,9 +16,36 @@ const Form = ({ setShowForm, jobs, setJobs }) => {
       companyName: inputCompany,
       jobTitle: inputJob,
     };
-    // Update jobs
-    setJobs([...jobs, newJob]);
-    localStorage.setItem("jobs", JSON.stringify([...jobs, newJob]));
+
+    // Update jobs based on category
+    if (category === "wishlist") {
+      setJobs({ ...jobs, wishlist: [...jobs.wishlist, newJob] });
+      localStorage.setItem(
+        "jobs",
+        JSON.stringify({
+          ...jobs,
+          wishlist: [...jobs.wishlist, newJob],
+        })
+      );
+    } else if (category === "applied") {
+      setJobs({ ...jobs, applied: [...jobs.applied, newJob] });
+      localStorage.setItem(
+        "jobs",
+        JSON.stringify({
+          ...jobs,
+          applied: [...jobs.applied, newJob],
+        })
+      );
+    } else if (category === "interview") {
+      setJobs({ ...jobs, interview: [...jobs.interview, newJob] });
+      localStorage.setItem(
+        "jobs",
+        JSON.stringify({
+          ...jobs,
+          interview: [...jobs.interview, newJob],
+        })
+      );
+    }
   };
 
   //logo api call
