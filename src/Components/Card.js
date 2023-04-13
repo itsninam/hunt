@@ -22,7 +22,7 @@ const Card = ({ job, removeJob }) => {
         {isShown && (
           <FontAwesomeIcon
             icon={faTrashCan}
-            onClick={() => removeJob(id)}
+            onClick={() => removeJob(job)}
             className="icon"
           />
         )}

@@ -15,6 +15,7 @@ const Form = ({ setShowForm, jobs, setJobs, category }) => {
       image: img ? img : logoPlaceholder,
       companyName: inputCompany,
       jobTitle: inputJob,
+      type: category,
     };
 
     // Update jobs based on category

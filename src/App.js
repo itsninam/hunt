@@ -28,26 +28,32 @@ const App = () => {
     });
   }, []);
 
-  const removeJob = (id) => {
-    console.log(id);
-    if (category === "wishlist") {
-      const filteredJobs = jobs.wishlist.filter((job) => job.id !== id);
+  const removeJob = (selectedJob) => {
+    console.log(selectedJob);
+    if (selectedJob.type === "wishlist") {
+      const filteredJobs = jobs.wishlist.filter(
+        (job) => job.id !== selectedJob.id
+      );
 
       setJobs({ ...jobs, wishlist: [...filteredJobs] });
       localStorage.setItem(
         "jobs",
         JSON.stringify({ ...jobs, wishlist: [...filteredJobs] })
       );
-    } else if (category === "applied") {
-      const filteredJobs = jobs.applied.filter((job) => job.id !== id);
+    } else if (selectedJob.type === "applied") {
+      const filteredJobs = jobs.applied.filter(
+        (job) => job.id !== selectedJob.id
+      );
 
       setJobs({ ...jobs, applied: [...filteredJobs] });
       localStorage.setItem(
         "jobs",
         JSON.stringify({ ...jobs, applied: [...filteredJobs] })
       );
-    } else if (category === "interview") {
-      const filteredJobs = jobs.interview.filter((job) => job.id !== id);
+    } else if (selectedJob.type === "interview") {
+      const filteredJobs = jobs.interview.filter(
+        (job) => job.id !== selectedJob.id
+      );
 
       setJobs({ ...jobs, interview: [...filteredJobs] });
       localStorage.setItem(
