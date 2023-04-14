@@ -89,30 +89,37 @@ const Form = ({ setShowForm, jobs, setJobs, category }) => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <button type="button" onClick={() => setShowForm(false)}>
-          Close
-        </button>
-        <label htmlFor="company">Company</label>
-        <input
-          type="text"
-          id="company"
-          value={inputCompany}
-          onChange={(event) => setInputCompany(event.target.value)}
-        />
+    <div className="form-container">
+      <form onSubmit={handleSubmit} className="form">
+        <h2 className="form-header">Add Job</h2>
 
-        <label htmlFor="job-title">Job Title</label>
-        <input
-          type="text"
-          id="job-title"
-          value={inputJob}
-          onChange={(event) => setInputJob(event.target.value)}
-        />
-        <button type="submit">Submit</button>
+        <div className="form-content">
+          <label htmlFor="company">Company</label>
+          <input
+            type="text"
+            id="company"
+            value={inputCompany}
+            onChange={(event) => setInputCompany(event.target.value)}
+          />
+
+          <label htmlFor="job-title">Job Title</label>
+          <input
+            type="text"
+            id="job-title"
+            value={inputJob}
+            onChange={(event) => setInputJob(event.target.value)}
+          />
+
+          <div className="button-container">
+            <button type="button" onClick={() => setShowForm(false)}>
+              Discard
+            </button>
+            <button type="submit">Submit</button>
+          </div>
+        </div>
       </form>
       <p>{errorMessage}</p>
-    </>
+    </div>
   );
 };
 

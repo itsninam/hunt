@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 const Card = ({ job, removeJob }) => {
-  const { id, image, companyName, jobTitle } = job;
+  const { image, companyName, jobTitle } = job;
   const [isShown, setIsShown] = useState(false);
 
   return (

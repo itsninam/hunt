@@ -1,5 +1,8 @@
 import Card from "./Card";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
 const DashBoard = ({ setShowForm, jobs, removeJob, setCategory }) => {
   const handleForm = (event) => {
     setCategory(event.target.id);
@@ -8,9 +11,13 @@ const DashBoard = ({ setShowForm, jobs, removeJob, setCategory }) => {
   return (
     <div className="dashboard-container">
       <div className="column">
-        <p>Wishlist</p>
-        <button onClick={(event) => handleForm(event)} id="wishlist">
-          Add job
+        <h2 className="column-header">Wishlist</h2>
+        <button
+          onClick={(event) => handleForm(event)}
+          id="wishlist"
+          className="add-job-btn"
+        >
+          <FontAwesomeIcon icon={faPlus} />
         </button>
 
         {jobs.wishlist.map((job) => {
@@ -18,18 +25,26 @@ const DashBoard = ({ setShowForm, jobs, removeJob, setCategory }) => {
         })}
       </div>
       <div className="column">
-        <p>Applied</p>
-        <button onClick={(event) => handleForm(event)} id="applied">
-          Add job
+        <h2 className="column-header">Applied</h2>
+        <button
+          onClick={(event) => handleForm(event)}
+          id="applied"
+          className="add-job-btn"
+        >
+          <FontAwesomeIcon icon={faPlus} />
         </button>
         {jobs.applied.map((job) => {
           return <Card job={job} key={job.id} removeJob={removeJob} />;
         })}
       </div>
       <div className="column">
-        <p>Interview</p>
-        <button onClick={(event) => handleForm(event)} id="interview">
-          Add job
+        <h2 className="column-header">Interview</h2>
+        <button
+          onClick={(event) => handleForm(event)}
+          id="interview"
+          className="add-job-btn"
+        >
+          <FontAwesomeIcon icon={faPlus} />
         </button>
         {jobs.interview.map((job) => {
           return <Card job={job} key={job.id} removeJob={removeJob} />;
