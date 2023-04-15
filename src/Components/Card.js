@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 const Card = ({ job, removeJob }) => {
-  const { image, companyName, jobTitle } = job;
+  const { image, companyName, jobTitle, colour } = job;
   const [isShown, setIsShown] = useState(false);
 
   return (
     <div
       className="card-container"
+      style={{ background: colour }}
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >

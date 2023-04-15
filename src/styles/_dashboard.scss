@@ -3,7 +3,7 @@
 
   .column {
     width: 400px;
-    border-right: 1px solid grey;
+    border-right: 1px solid $lightGrey;
     height: 500px;
 
     .column-header {
@@ -15,7 +15,8 @@
       margin: auto;
       display: block;
       width: 75%;
-      border: 1px solid grey;
+      border: 1px solid $lightGrey;
+      box-shadow: $shadow;
       height: 32px;
       border-radius: 8px;
       display: flex;
@@ -23,6 +24,7 @@
       align-items: center;
       background: none;
       cursor: pointer;
+      color: $primary;
     }
   }
 }

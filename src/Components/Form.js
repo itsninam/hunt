@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logoPlaceholder from "../assets/images/logo.png";
 import axios from "axios";
+import ColourChooser from "./ColourChooser";
 
 const Form = ({ setShowForm, jobs, setJobs, category }) => {
   const [inputCompany, setInputCompany] = useState("");
   const [inputJob, setInputJob] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [colour, setColour] = useState("");
 
   const createJob = (img) => {
     // Create new job obj with user input
@@ -16,6 +18,7 @@ const Form = ({ setShowForm, jobs, setJobs, category }) => {
       companyName: inputCompany,
       jobTitle: inputJob,
       type: category,
+      colour: colour,
     };
 
     // Update jobs based on category
@@ -94,21 +97,29 @@ const Form = ({ setShowForm, jobs, setJobs, category }) => {
         <h2 className="form-header">Add Job</h2>
 
         <div className="form-content">
-          <label htmlFor="company">Company</label>
+          <label htmlFor="company" className="form-label">
+            Company
+          </label>
           <input
+            className="form-field"
             type="text"
             id="company"
             value={inputCompany}
             onChange={(event) => setInputCompany(event.target.value)}
           />
 
-          <label htmlFor="job-title">Job Title</label>
+          <label htmlFor="job-title" className="form-label">
+            Job Title
+          </label>
           <input
+            className="form-field"
             type="text"
             id="job-title"
             value={inputJob}
             onChange={(event) => setInputJob(event.target.value)}
           />
+
+          <ColourChooser setColour={setColour} colour={colour} />
 
           <div className="button-container">
             <button type="button" onClick={() => setShowForm(false)}>
