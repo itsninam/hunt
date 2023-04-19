@@ -5,11 +5,22 @@ import Form from "./Components/Form";
 import Loading from "./Components/Loading";
 
 const App = () => {
-  const [showForm, setShowForm] = useState(false);
   const [jobs, setJobs] = useState([]);
+  const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState("");
 
+  const [isEdit, setIsEdit] = useState(false);
+  //state for currently submitted card values
+  const [cardValue, setCardValue] = useState({
+    companyName: "",
+    jobTitle: "",
+    colour: "",
+  });
+
+  const [cardToEdit, setCardToEdit] = useState({});
+
+  //local storage config
   useEffect(() => {
     setLoading(false);
 
@@ -28,8 +39,8 @@ const App = () => {
     });
   }, []);
 
+  //remove job
   const removeJob = (selectedJob) => {
-    console.log(selectedJob);
     if (selectedJob.type === "wishlist") {
       const filteredJobs = jobs.wishlist.filter(
         (job) => job.id !== selectedJob.id
@@ -63,6 +74,22 @@ const App = () => {
     }
   };
 
+  //open edit form on card selection, and set current card values in input fields
+  const handleOpenEditForm = (clickedCard) => {
+    setCardToEdit(clickedCard);
+    //obtain current values in card
+    setCardValue({
+      companyName: clickedCard.companyName,
+      jobTitle: clickedCard.jobTitle,
+      colour: clickedCard.colour,
+    });
+
+    //show form
+    setShowForm(true);
+    //create edit state
+    setIsEdit(true);
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -74,6 +101,8 @@ const App = () => {
         jobs={jobs}
         removeJob={removeJob}
         setCategory={setCategory}
+        setIsEdit={setIsEdit}
+        handleOpenEditForm={handleOpenEditForm}
       />
 
       {showForm && (
@@ -82,6 +111,10 @@ const App = () => {
           jobs={jobs}
           setJobs={setJobs}
           category={category}
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
+          cardValue={cardValue}
+          cardToEdit={cardToEdit}
         />
       )}
     </div>

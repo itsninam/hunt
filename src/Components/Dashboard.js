@@ -3,10 +3,18 @@ import Card from "./Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const DashBoard = ({ setShowForm, jobs, removeJob, setCategory }) => {
+const DashBoard = ({
+  setShowForm,
+  jobs,
+  removeJob,
+  setCategory,
+  setIsEdit,
+  handleOpenEditForm,
+}) => {
   const handleForm = (event) => {
     setCategory(event.target.id);
     setShowForm(true);
+    setIsEdit(false);
   };
   return (
     <div className="dashboard-container">
@@ -21,7 +29,14 @@ const DashBoard = ({ setShowForm, jobs, removeJob, setCategory }) => {
         </button>
 
         {jobs.wishlist.map((job) => {
-          return <Card job={job} key={job.id} removeJob={removeJob} />;
+          return (
+            <Card
+              job={job}
+              key={job.id}
+              removeJob={removeJob}
+              handleOpenEditForm={handleOpenEditForm}
+            />
+          );
         })}
       </div>
       <div className="column">
@@ -34,7 +49,14 @@ const DashBoard = ({ setShowForm, jobs, removeJob, setCategory }) => {
           <FontAwesomeIcon icon={faPlus} />
         </button>
         {jobs.applied.map((job) => {
-          return <Card job={job} key={job.id} removeJob={removeJob} />;
+          return (
+            <Card
+              job={job}
+              key={job.id}
+              removeJob={removeJob}
+              handleOpenEditForm={handleOpenEditForm}
+            />
+          );
         })}
       </div>
       <div className="column">
@@ -47,7 +69,14 @@ const DashBoard = ({ setShowForm, jobs, removeJob, setCategory }) => {
           <FontAwesomeIcon icon={faPlus} />
         </button>
         {jobs.interview.map((job) => {
-          return <Card job={job} key={job.id} removeJob={removeJob} />;
+          return (
+            <Card
+              job={job}
+              key={job.id}
+              removeJob={removeJob}
+              handleOpenEditForm={handleOpenEditForm}
+            />
+          );
         })}
       </div>
     </div>

@@ -3,11 +3,23 @@ import logoPlaceholder from "../assets/images/logo.png";
 import axios from "axios";
 import ColourChooser from "./ColourChooser";
 
-const Form = ({ setShowForm, jobs, setJobs, category }) => {
-  const [inputCompany, setInputCompany] = useState("");
-  const [inputJob, setInputJob] = useState("");
+const Form = ({
+  setShowForm,
+  jobs,
+  setJobs,
+  category,
+  isEdit,
+  setIsEdit,
+  cardValue,
+  cardToEdit,
+}) => {
+  //if edit card is opened, display current card values, otherwise display nothing
+  const [inputCompany, setInputCompany] = useState(
+    isEdit ? cardValue.companyName : ""
+  );
+  const [inputJob, setInputJob] = useState(isEdit ? cardValue.jobTitle : "");
+  const [colour, setColour] = useState(isEdit ? cardValue.colour : "");
   const [errorMessage, setErrorMessage] = useState("");
-  const [colour, setColour] = useState("");
 
   const createJob = (img) => {
     // Create new job obj with user input
@@ -52,6 +64,65 @@ const Form = ({ setShowForm, jobs, setJobs, category }) => {
     }
   };
 
+  //edit card functionality
+  const editedCard = (img) => {
+    // Update jobs based on category
+    if (cardToEdit.type === "wishlist") {
+      const editedCard = jobs.wishlist.find((job) => {
+        return job.id === cardToEdit.id;
+      });
+      editedCard.companyName = inputCompany;
+      editedCard.jobTitle = inputJob;
+      editedCard.colour = colour;
+      editedCard.image = img;
+      //update card
+      setJobs({ ...jobs, wishlist: [...jobs.wishlist] });
+      localStorage.setItem(
+        "jobs",
+        JSON.stringify({
+          ...jobs,
+          wishlist: [...jobs.wishlist],
+        })
+      );
+    }
+    if (cardToEdit.type === "applied") {
+      const editedCard = jobs.applied.find((job) => {
+        return job.id === cardToEdit.id;
+      });
+      editedCard.companyName = inputCompany;
+      editedCard.jobTitle = inputJob;
+      editedCard.colour = colour;
+      editedCard.image = img;
+      //update card
+      setJobs({ ...jobs, applied: [...jobs.applied] });
+      localStorage.setItem(
+        "jobs",
+        JSON.stringify({
+          ...jobs,
+          applied: [...jobs.applied],
+        })
+      );
+    }
+    if (cardToEdit.type === "interview") {
+      const editedCard = jobs.interview.find((job) => {
+        return job.id === cardToEdit.id;
+      });
+      editedCard.companyName = inputCompany;
+      editedCard.jobTitle = inputJob;
+      editedCard.colour = colour;
+      editedCard.image = img;
+      //update card
+      setJobs({ ...jobs, interview: [...jobs.interview] });
+      localStorage.setItem(
+        "jobs",
+        JSON.stringify({
+          ...jobs,
+          interview: [...jobs.interview],
+        })
+      );
+    }
+  };
+
   //logo api call
   const fetchLogo = () => {
     axios({
@@ -65,7 +136,9 @@ const Form = ({ setShowForm, jobs, setJobs, category }) => {
         //optional chaining if user's search does not exist
         const logo = response.data[0]?.icon;
 
+        //call functions with logo from api
         createJob(logo);
+        editedCard(logo);
 
         // Hide form
         setShowForm(false);
@@ -79,9 +152,22 @@ const Form = ({ setShowForm, jobs, setJobs, category }) => {
       });
   };
 
+  //edit card
+  const handleEdit = (event) => {
+    event.preventDefault();
+
+    //call api
+    // fetchLogo();
+    editedCard();
+    //close form on save
+    setShowForm(false);
+    setIsEdit(false);
+  };
+
   //form submit
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsEdit(false);
 
     if (inputCompany && inputJob) {
       // Make api call
@@ -93,7 +179,7 @@ const Form = ({ setShowForm, jobs, setJobs, category }) => {
 
   return (
     <div className="form-container">
-      <form onSubmit={handleSubmit} className="form">
+      <form onSubmit={isEdit ? handleEdit : handleSubmit} className="form">
         <h2 className="form-header">Add Job</h2>
 
         <div className="form-content">
@@ -125,7 +211,11 @@ const Form = ({ setShowForm, jobs, setJobs, category }) => {
             <button type="button" onClick={() => setShowForm(false)}>
               Discard
             </button>
-            <button type="submit">Submit</button>
+            {isEdit ? (
+              <button type="submit">Save</button>
+            ) : (
+              <button type="submit">Submit</button>
+            )}
           </div>
         </div>
       </form>
