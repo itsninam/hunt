@@ -113,6 +113,7 @@ const App = () => {
           category={category}
           isEdit={isEdit}
           setIsEdit={setIsEdit}
+          setCardToEdit={setCardToEdit}
           cardValue={cardValue}
           cardToEdit={cardToEdit}
         />

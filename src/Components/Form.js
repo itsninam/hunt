@@ -12,6 +12,7 @@ const Form = ({
   setIsEdit,
   cardValue,
   cardToEdit,
+  setCardToEdit,
 }) => {
   //if edit card is opened, display current card values, otherwise display nothing
   const [inputCompany, setInputCompany] = useState(
@@ -137,8 +138,11 @@ const Form = ({
         const logo = response.data[0]?.icon;
 
         //call functions with logo from api
-        createJob(logo);
-        editedCard(logo);
+        if (isEdit) {
+          editedCard(logo);
+        } else {
+          createJob(logo);
+        }
 
         // Hide form
         setShowForm(false);
@@ -155,13 +159,17 @@ const Form = ({
   //edit card
   const handleEdit = (event) => {
     event.preventDefault();
-
-    //call api
-    // fetchLogo();
-    editedCard();
-    //close form on save
-    setShowForm(false);
     setIsEdit(false);
+
+    if (inputCompany && inputJob) {
+      // Make api call
+      fetchLogo();
+    } else {
+      alert("Please enter all fields");
+    }
+
+    //clear card to edit
+    setCardToEdit({});
   };
 
   //form submit
