@@ -13,7 +13,7 @@ const Card = ({ job, removeJob, handleOpenEditForm }) => {
       style={{ background: colour }}
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
-      onClick={() => handleOpenEditForm(job)}
+      onClick={(event) => handleOpenEditForm(job, event)}
     >
       <img className="company-logo" src={image} alt="job logo" />
       <div className="card-info">

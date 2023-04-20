@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import logoPlaceholder from "../assets/images/logo.png";
 import axios from "axios";
 import ColourChooser from "./ColourChooser";
@@ -185,6 +185,13 @@ const Form = ({
     }
   };
 
+  //close form if user clicks anywhere outside the form
+  window.addEventListener("click", (event) => {
+    if (event.target.matches(".form-container")) {
+      setShowForm(false);
+    }
+  });
+
   return (
     <div className="form-container">
       <form onSubmit={isEdit ? handleEdit : handleSubmit} className="form">
@@ -195,6 +202,7 @@ const Form = ({
             Company
           </label>
           <input
+            autoFocus
             className="form-field"
             type="text"
             id="company"

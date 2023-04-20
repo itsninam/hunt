@@ -75,7 +75,7 @@ const App = () => {
   };
 
   //open edit form on card selection, and set current card values in input fields
-  const handleOpenEditForm = (clickedCard) => {
+  const handleOpenEditForm = (clickedCard, event) => {
     setCardToEdit(clickedCard);
     //obtain current values in card
     setCardValue({
@@ -84,10 +84,12 @@ const App = () => {
       colour: clickedCard.colour,
     });
 
-    //show form
-    setShowForm(true);
-    //create edit state
-    setIsEdit(true);
+    //prevent form from showing if user clicks on trash icon
+    //only display form if user clicks on card
+    if (!event.target.closest(".icon")) {
+      setShowForm(true);
+      setIsEdit(true);
+    }
   };
 
   if (loading) {
