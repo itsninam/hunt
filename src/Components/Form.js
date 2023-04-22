@@ -221,7 +221,11 @@ const Form = ({
             onChange={(event) => setInputJob(event.target.value)}
           />
 
-          <ColourChooser setColour={setColour} colour={colour} />
+          <ColourChooser
+            setColour={setColour}
+            colour={colour}
+            handleSubmit={handleSubmit}
+          />
 
           <div className="button-container">
             <button type="button" onClick={() => setShowForm(false)}>

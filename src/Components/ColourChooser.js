@@ -1,7 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const ColourChooser = ({ setColour, colour }) => {
+const ColourChooser = ({ setColour, colour, handleSubmit }) => {
   const [showColourDisplay, setShowColourDisplay] = useState(false);
+
+  const chooseColour = (event) => {
+    setColour(event.target.value);
+    setShowColourDisplay(false);
+  };
+
+  useEffect(() => {
+    console.log(showColourDisplay);
+    if (showColourDisplay) {
+      document.addEventListener("keydown", (event) => {
+        handleSubmit(event);
+        console.log("false");
+      });
+    }
+  }, [showColourDisplay]);
 
   return (
     <div className="colour-chooser">
@@ -19,8 +34,8 @@ const ColourChooser = ({ setColour, colour }) => {
             name="color-chooser"
             value="#ee6055"
             className="red"
-            onChange={(event) => setColour(event.target.value)}
-            onClick={() => setShowColourDisplay(false)}
+            onChange={chooseColour}
+            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="red" className="sr-only">
             Red
@@ -32,8 +47,8 @@ const ColourChooser = ({ setColour, colour }) => {
             name="color-chooser"
             value="#e76f51"
             className="orange"
-            onChange={(event) => setColour(event.target.value)}
-            onClick={() => setShowColourDisplay(false)}
+            onChange={chooseColour}
+            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="orange" className="sr-only">
             Orange
@@ -45,8 +60,8 @@ const ColourChooser = ({ setColour, colour }) => {
             name="color-chooser"
             value="#ff6392"
             className="pink"
-            onChange={(event) => setColour(event.target.value)}
-            onClick={() => setShowColourDisplay(false)}
+            onChange={chooseColour}
+            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="pink" className="sr-only">
             Pink
@@ -58,8 +73,8 @@ const ColourChooser = ({ setColour, colour }) => {
             name="color-chooser"
             value="#7161ef"
             className="purple"
-            onChange={(event) => setColour(event.target.value)}
-            onClick={() => setShowColourDisplay(false)}
+            onChange={chooseColour}
+            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="purple" className="sr-only">
             Purple
@@ -70,8 +85,8 @@ const ColourChooser = ({ setColour, colour }) => {
             name="color-chooser"
             value="#fcbf49"
             className="yellow"
-            onChange={(event) => setColour(event.target.value)}
-            onClick={() => setShowColourDisplay(false)}
+            onChange={chooseColour}
+            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="yellow" className="sr-only">
             Yellow
