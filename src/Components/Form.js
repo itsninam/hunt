@@ -196,7 +196,6 @@ const Form = ({
     <div className="form-container">
       <form onSubmit={isEdit ? handleEdit : handleSubmit} className="form">
         <h2 className="form-header">Add Job</h2>
-
         <div className="form-content">
           <label htmlFor="company" className="form-label">
             Company
@@ -221,11 +220,7 @@ const Form = ({
             onChange={(event) => setInputJob(event.target.value)}
           />
 
-          <ColourChooser
-            setColour={setColour}
-            colour={colour}
-            handleSubmit={handleSubmit}
-          />
+          <ColourChooser setColour={setColour} colour={colour} />
 
           <div className="button-container">
             <button type="button" onClick={() => setShowForm(false)}>
@@ -234,7 +229,9 @@ const Form = ({
             {isEdit ? (
               <button type="submit">Save</button>
             ) : (
-              <button type="submit">Submit</button>
+              <button type="submit" className="submit-btn">
+                Submit
+              </button>
             )}
           </div>
         </div>

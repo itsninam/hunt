@@ -1,22 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-const ColourChooser = ({ setColour, colour, handleSubmit }) => {
+const ColourChooser = ({ setColour, colour }) => {
   const [showColourDisplay, setShowColourDisplay] = useState(false);
 
   const chooseColour = (event) => {
     setColour(event.target.value);
     setShowColourDisplay(false);
+    //add focus to submit button after choosing colour
+    document.querySelector(".submit-btn").focus();
   };
-
-  useEffect(() => {
-    console.log(showColourDisplay);
-    if (showColourDisplay) {
-      document.addEventListener("keydown", (event) => {
-        handleSubmit(event);
-        console.log("false");
-      });
-    }
-  }, [showColourDisplay]);
 
   return (
     <div className="colour-chooser">
