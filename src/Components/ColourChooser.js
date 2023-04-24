@@ -27,7 +27,6 @@ const ColourChooser = ({ setColour, colour }) => {
             value="#ee6055"
             className="red"
             onChange={chooseColour}
-            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="red" className="sr-only">
             Red
@@ -40,7 +39,6 @@ const ColourChooser = ({ setColour, colour }) => {
             value="#e76f51"
             className="orange"
             onChange={chooseColour}
-            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="orange" className="sr-only">
             Orange
@@ -53,7 +51,6 @@ const ColourChooser = ({ setColour, colour }) => {
             value="#ff6392"
             className="pink"
             onChange={chooseColour}
-            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="pink" className="sr-only">
             Pink
@@ -66,7 +63,6 @@ const ColourChooser = ({ setColour, colour }) => {
             value="#7161ef"
             className="purple"
             onChange={chooseColour}
-            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="purple" className="sr-only">
             Purple
@@ -78,7 +74,6 @@ const ColourChooser = ({ setColour, colour }) => {
             value="#fcbf49"
             className="yellow"
             onChange={chooseColour}
-            // onClick={() => setShowColourDisplay(false)}
           />
           <label htmlFor="yellow" className="sr-only">
             Yellow
