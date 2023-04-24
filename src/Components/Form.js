@@ -159,7 +159,6 @@ const Form = ({
   //edit card
   const handleEdit = (event) => {
     event.preventDefault();
-    setIsEdit(false);
 
     if (inputCompany && inputJob) {
       // Make api call
@@ -227,7 +226,9 @@ const Form = ({
               Discard
             </button>
             {isEdit ? (
-              <button type="submit">Save</button>
+              <button type="submit" className="submit-btn">
+                Save
+              </button>
             ) : (
               <button type="submit" className="submit-btn">
                 Submit
