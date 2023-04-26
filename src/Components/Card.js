@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 const Card = ({ job, removeJob, handleOpenEditForm }) => {
-  const { image, companyName, jobTitle, colour } = job;
+  const { image, companyName, jobTitle, colour, timeAdded } = job;
   const [isShown, setIsShown] = useState(false);
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    setInterval(() => {
+      setTime(time + 5);
+    }, 3000);
+
+    job.timeAdded = time;
+  });
 
   return (
     <div
@@ -29,7 +38,7 @@ const Card = ({ job, removeJob, handleOpenEditForm }) => {
           />
         )}
 
-        <p className="created-at">1sec</p>
+        <p className="created-at">{timeAdded} sec</p>
       </div>
     </div>
   );

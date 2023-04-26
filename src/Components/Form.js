@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logoPlaceholder from "../assets/images/logo.png";
 import axios from "axios";
 import ColourChooser from "./ColourChooser";
@@ -32,6 +32,7 @@ const Form = ({
       jobTitle: inputJob,
       type: category,
       colour: colour,
+      timeAdded: 0,
     };
 
     // Update jobs based on category
