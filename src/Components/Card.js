@@ -10,10 +10,8 @@ const Card = ({ job, removeJob, handleOpenEditForm }) => {
 
   useEffect(() => {
     setInterval(() => {
-      setTime(time + 5);
-    }, 3000);
-
-    job.timeAdded = time;
+      setTime(time + 1);
+    }, 60000);
   });
 
   return (
@@ -38,7 +36,9 @@ const Card = ({ job, removeJob, handleOpenEditForm }) => {
           />
         )}
 
-        <p className="created-at">{timeAdded} sec</p>
+        <p className="created-at">
+          {timeAdded + time} {time < 1 ? "sec" : "min"}
+        </p>
       </div>
     </div>
   );
