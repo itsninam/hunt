@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 const Card = ({ job, removeJob, handleOpenEditForm }) => {
-  const { image, companyName, jobTitle, colour, timeAdded } = job;
+  const { image, companyName, jobTitle, colour } = job;
   const [isShown, setIsShown] = useState(false);
-  const [time, setTime] = useState(0);
+  const [timeAdded, setTimeAdded] = useState(
+    localStorage.getItem(`timeAdded-${job.id}`) || job.timeAdded
+  );
 
   useEffect(() => {
-    setInterval(() => {
-      setTime(time + 1);
+    const intervalId = setInterval(() => {
+      setTimeAdded((prevTimeAdded) => Number(prevTimeAdded) + 1);
     }, 60000);
-  });
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(`timeAdded-${job.id}`, timeAdded);
+  }, [timeAdded, job.id]);
 
   return (
     <div
@@ -37,7 +44,7 @@ const Card = ({ job, removeJob, handleOpenEditForm }) => {
         )}
 
         <p className="created-at">
-          {timeAdded + time} {time < 1 ? "sec" : "min"}
+          {Number(timeAdded)} {timeAdded < 1 ? "sec" : "min"}
         </p>
       </div>
     </div>
